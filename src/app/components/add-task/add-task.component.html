@@ -1,0 +1,29 @@
+<button mat-fab mat-icon-button [matMenuTriggerFor]="menu" class="addButton hvr-grow-shadow" aria-label="Add Button">
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <div class="addMenu">
+    <h1>Add Task</h1>
+  <form (click)="$event.stopPropagation()" [formGroup]="addTaskForm"> 
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="Title" formControlName="title">
+    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="body">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Due Date</mat-label>
+        <input matInput placeholder="Due Date" formControlName="dueDate">
+      </mat-form-field>
+    </form>
+    <button mat-fab (click)="addTask()">
+      <mat-icon>
+        add
+      </mat-icon>
+    </button>
+  </div>
+</mat-menu>
+

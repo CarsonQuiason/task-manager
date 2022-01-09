@@ -1,0 +1,224 @@
+<div class="tasksContainer">
+
+  <!-- Planned Section -->
+  <mat-card class="taskContainer" >
+    <div class="headerDiv">
+      <h1>Planned</h1>
+    </div>
+      <ng-container *ngFor="let task of tasks; let i = index" [class.active]="i == currentIndex">
+        <mat-card *ngIf="task.state==0"class="task hvr-grow-shadow">
+          <div>
+            <button mat-icon-button class="deleteButton" (click)="deleteTask(task)">
+              <mat-icon  [ngStyle]="{'color':'white'}">
+                clear
+              </mat-icon>
+            </button>
+            <button mat-icon-button class="editButton" (click)="beginEdit(task)">
+              <mat-icon  [ngStyle]="{'color':'white'}">
+                edit
+              </mat-icon>
+            </button>
+          </div>
+          
+          <ng-container *ngIf="this.editId != this.task.id">
+            <div class="headerDiv" *ngIf="!editing">
+              <h1>{{ task.title }}</h1>
+            </div>
+            <div *ngIf="!editing">
+              <p>{{ task.body }}</p>
+              <p>Due: {{ task.dueDate }}</p>
+              <button mat-icon-button (click)="updateState(task, 1)">
+                <mat-icon [ngStyle]="{'color':'white'}">
+                  arrow_forward
+                </mat-icon>
+              </button>
+            </div>
+          </ng-container>
+          
+          <ng-container *ngIf="this.editId == this.task.id">
+            <div class="headerDiv">
+              <h1>Edit</h1>
+            </div>
+            <div>
+              <form [formGroup]="taskForm"> 
+                <mat-form-field class="editForm">
+                  <mat-label>Title</mat-label>
+                  <input matInput placeholder="Title" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="editForm">
+                  <mat-label>Description</mat-label>
+                  <input matInput placeholder="Description" formControlName="body">asdf
+                </mat-form-field>
+                <mat-form-field class="editForm">
+                  <mat-label>Due Date</mat-label>
+                  <input matInput placeholder="Due Date" formControlName="dueDate">
+                </mat-form-field>
+              </form>
+              <button mat-icon-button (click)="cancelEdit()">
+                <mat-icon [ngStyle]="{'color':'white'}">
+                  clear
+                </mat-icon>
+              </button>
+              <button mat-icon-button (click)="submitEdit(task)">
+                <mat-icon [ngStyle]="{'color':'white'}">
+                  check
+                </mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </mat-card>
+      </ng-container>
+  </mat-card>
+
+  <!-- In-Progress Section -->
+  <mat-card class="taskContainer" >
+      <div class="headerDiv">
+        <h1>In-Progress</h1>
+      </div>
+        <ng-container *ngFor="let task of tasks; let i = index" [class.active]="i == currentIndex">
+          <mat-card *ngIf="task.state==1"class="task hvr-grow-shadow">
+            <div>
+              <button mat-icon-button class="deleteButton" (click)="deleteTask(task)">
+                <mat-icon  [ngStyle]="{'color':'white'}">
+                  clear
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="editButton" (click)="beginEdit(task)">
+                <mat-icon  [ngStyle]="{'color':'white'}">
+                  edit
+                </mat-icon>
+              </button>
+            </div>
+
+            <ng-container *ngIf="this.editId != this.task.id">
+              <div class="headerDiv">
+                <h1>{{ task.title }}</h1>
+              </div>
+              <div>
+                <p>{{ task.body }}</p>
+                <p>Due: {{ task.dueDate }}</p>
+                <button mat-icon-button (click)="updateState(task, 0)" class="arrows">
+                  <mat-icon class="hvr-icon-forward" [ngStyle]="{'color':'white'}">
+                    arrow_back
+                  </mat-icon>
+                </button>
+                <button mat-icon-button (click)="updateState(task, 2)" class="arrows">
+                  <mat-icon [ngStyle]="{'color':'white'}"> 
+                    arrow_forward
+                  </mat-icon>
+                </button>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="this.editId == this.task.id">
+              <div class="headerDiv">
+                <h1>Edit</h1>
+              </div>
+              <div>
+                <form [formGroup]="taskForm"> 
+                  <mat-form-field class="editForm">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="title" value="this.task.title">
+                  </mat-form-field>
+                  <mat-form-field class="editForm">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Description" formControlName="body">
+                  </mat-form-field>
+                  <mat-form-field class="editForm">
+                    <mat-label>Due Date</mat-label>
+                    <input matInput placeholder="Due Date" formControlName="dueDate">
+                  </mat-form-field>
+                </form>
+                <button mat-icon-button (click)="cancelEdit()">
+                  <mat-icon [ngStyle]="{'color':'white'}">
+                    clear
+                  </mat-icon>
+                </button>
+                <button mat-icon-button (click)="submitEdit(task)">
+                  <mat-icon [ngStyle]="{'color':'white'}">
+                    check
+                  </mat-icon>
+                </button>
+              </div>
+            </ng-container>
+
+          </mat-card>
+        </ng-container>
+    </mat-card>
+''
+    <!-- Finished Section -->
+    <mat-card class="taskContainer" >
+      <div class="headerDiv">
+        <h1>Finished</h1>
+      </div>
+        <ng-container *ngFor="let task of tasks; let i = index" [class.active]="i == currentIndex">
+          <mat-card *ngIf="task.state==2"class="task hvr-grow-shadow">
+            <div>
+              <button mat-icon-button class="deleteButton" (click)="deleteTask(task)">
+                <mat-icon  [ngStyle]="{'color':'white'}">
+                  clear
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="editButton" (click)="beginEdit(task)">
+                <mat-icon  [ngStyle]="{'color':'white'}">
+                  edit
+                </mat-icon>
+              </button>
+            </div>
+            <div class="headerDiv" *ngIf="this.editId != this.task.id">
+              <h1>{{ task.title }}</h1>
+            </div>
+
+            <ng-container *ngIf="this.editId != this.task.id">
+              <div>
+                <p>{{ task.body }}</p>
+                <p>Due: {{ task.dueDate }}</p>
+                <button mat-icon-button (click)="updateState(task, 1)" class="arrows">
+                  <mat-icon class="hvr-icon-forward" [ngStyle]="{'color':'white'}">
+                    arrow_back
+                  </mat-icon>
+                </button>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="this.editId == this.task.id">
+              <div class="headerDiv">
+                <h1>Edit</h1>
+              </div>
+              <div>
+                <form [formGroup]="taskForm"> 
+                  <mat-form-field class="editForm">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="title">
+                  </mat-form-field>
+                  <mat-form-field class="editForm">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Description" formControlName="body">
+                  </mat-form-field>
+                  <mat-form-field class="editForm">
+                    <mat-label>Due Date</mat-label>
+                    <input matInput placeholder="Due Date" formControlName="dueDate">
+                  </mat-form-field>
+                </form>
+                <button mat-icon-button (click)="cancelEdit()">
+                  <mat-icon [ngStyle]="{'color':'white'}">
+                    clear
+                  </mat-icon>
+                </button>
+                <button mat-icon-button (click)="submitEdit(task)">
+                  <mat-icon [ngStyle]="{'color':'white'}">
+                    check
+                  </mat-icon>
+                </button>
+              </div>
+            </ng-container>
+            
+          </mat-card>
+        </ng-container>
+    </mat-card>
+
+</div>
+  
+
+<!-- <ng-container *ngIf="this.editId == this.task.id"> -->
+<!-- <ng-container *ngIf="this.editId != this.task.id"> -->
